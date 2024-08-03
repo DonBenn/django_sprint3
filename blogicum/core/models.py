@@ -1,8 +1,10 @@
 from django.db import models  # type: ignore
 
 
-class BaseModel(models.Model):
-    """Абстрактная модель."""
+class PublishedAndCreatedModel(models.Model):
+    """Абстрактная модель.
+    Добавляет к модели дату создания и наличие публикации
+    """
 
     is_published = models.BooleanField(default=True,
                                        verbose_name='Опубликовано',

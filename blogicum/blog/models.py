@@ -1,14 +1,15 @@
 from django.db import models  # type: ignore
 from django.contrib.auth import get_user_model  # type: ignore
 
-from core.models import BaseModel
+from core.models import PublishedAndCreatedModel
+from blog.constants import CHAR
 
 User = get_user_model()
 
 
-class Category(BaseModel):
+class Category(PublishedAndCreatedModel):
     title = models.CharField(
-        max_length=256, verbose_name='Заголовок')
+        max_length=CHAR, verbose_name='Заголовок')
     slug = models.SlugField(unique=True, verbose_name='Идентификатор',
                             help_text='Идентификатор страницы для URL; '
                             'разрешены символы латиницы, цифры, дефис и'
@@ -24,8 +25,8 @@ class Category(BaseModel):
         return self.title
 
 
-class Location(BaseModel):
-    name = models.CharField(max_length=256, verbose_name='Название места')
+class Location(PublishedAndCreatedModel):
+    name = models.CharField(max_length=CHAR, verbose_name='Название места')
 
     class Meta:
         verbose_name = 'местоположение'
@@ -35,8 +36,8 @@ class Location(BaseModel):
         return self.name
 
 
-class Post(BaseModel):
-    title = models.CharField(max_length=256, verbose_name='Заголовок')
+class Post(PublishedAndCreatedModel):
+    title = models.CharField(max_length=CHAR, verbose_name='Заголовок')
     text = models.TextField(verbose_name='Текст')
     pub_date = models.DateTimeField(verbose_name='Дата и время публикации',
                                     help_text='Если установить дату и время в '
@@ -45,17 +46,20 @@ class Post(BaseModel):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        verbose_name='Автор публикации'
+        verbose_name='Автор публикации',
+        related_name='author'
     )
     location = models.ForeignKey(
         Location,
         on_delete=models.SET_NULL, null=True,
-        verbose_name='Местоположение'
+        verbose_name='Местоположение',
+        related_name='location'
     )
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL, null=True,
-        verbose_name='Категория'
+        verbose_name='Категория',
+        related_name='category'
     )
 
     class Meta:

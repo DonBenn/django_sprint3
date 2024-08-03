@@ -1,0 +1,3 @@
+CHAR = 256
+
+NUMBER_OF_POSTS = 5
