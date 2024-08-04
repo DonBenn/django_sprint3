@@ -3,7 +3,7 @@ from datetime import datetime
 from django.shortcuts import render, get_object_or_404  # type: ignore
 
 from blog.models import Post, Category
-from blog.constants import NUMBER_OF_POSTS
+from blog.constants import MAX_POSTS_ON_PAGE
 
 
 def index(request):
@@ -14,7 +14,7 @@ def index(request):
         'category', 'location').filter(
             is_published=True,
             category__is_published=True,
-            pub_date__date__lte=datetime.now())[:NUMBER_OF_POSTS]
+            pub_date__date__lte=datetime.now())[:MAX_POSTS_ON_PAGE]
 
     context = {'post_list': post_list}
 
