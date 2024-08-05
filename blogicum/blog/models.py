@@ -2,14 +2,14 @@ from django.db import models  # type: ignore
 from django.contrib.auth import get_user_model  # type: ignore
 
 from core.models import PublishedAndCreatedModel
-from blog.constants import MAX_FIELD_LENGTH
+from blog.constants import MAX_CHAR_FIELD_LENGTH
 
 User = get_user_model()
 
 
 class Category(PublishedAndCreatedModel):
     title = models.CharField(
-        max_length=MAX_FIELD_LENGTH, verbose_name='Заголовок')
+        max_length=MAX_CHAR_FIELD_LENGTH, verbose_name='Заголовок')
     slug = models.SlugField(unique=True, verbose_name='Идентификатор',
                             help_text='Идентификатор страницы для URL; '
                             'разрешены символы латиницы, цифры, дефис и'
@@ -26,7 +26,7 @@ class Category(PublishedAndCreatedModel):
 
 
 class Location(PublishedAndCreatedModel):
-    name = models.CharField(max_length=MAX_FIELD_LENGTH,
+    name = models.CharField(max_length=MAX_CHAR_FIELD_LENGTH,
                             verbose_name='Название места')
 
     class Meta:
@@ -38,7 +38,7 @@ class Location(PublishedAndCreatedModel):
 
 
 class Post(PublishedAndCreatedModel):
-    title = models.CharField(max_length=MAX_FIELD_LENGTH,
+    title = models.CharField(max_length=MAX_CHAR_FIELD_LENGTH,
                              verbose_name='Заголовок')
     text = models.TextField(verbose_name='Текст')
     pub_date = models.DateTimeField(verbose_name='Дата и время публикации',
